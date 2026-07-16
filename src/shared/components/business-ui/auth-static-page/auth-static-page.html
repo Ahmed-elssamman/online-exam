@@ -1,0 +1,31 @@
+<main
+  class="min-h-screen bg-linear-to-b from-blue-200 to-white flex items-center justify-center p-6"
+>
+  <article class="w-full max-w-sm flex flex-col gap-10">
+    <header class="flex items-center gap-2">
+      <lucide-icon name="folder-code" class="text-blue-600" [size]="22"></lucide-icon>
+      <span class="font-semibold text-gray-800 tracking-wide">{{ authData().mainTitle }}</span>
+    </header>
+
+    <h1 class="text-2xl font-bold text-gray-900 leading-snug">
+      {{ authData().description }}
+    </h1>
+
+    <ul class="flex flex-col gap-6">
+      @for (item of authData().sections; track item.key) {
+        <li class="flex gap-4 items-start">
+          <figure
+            class="shrink-0 w-10 h-10 border border-blue-300 rounded-lg flex items-center justify-center text-blue-600 m-0"
+          >
+            <lucide-icon [name]="item.icon" [size]="20"></lucide-icon>
+          </figure>
+
+          <section class="flex flex-col gap-1">
+            <h2 class="font-mono font-semibold text-blue-600 text-sm">{{ item.title }}</h2>
+            <p class="font-mono text-gray-500 text-sm leading-relaxed">{{ item.description }}</p>
+          </section>
+        </li>
+      }
+    </ul>
+  </article>
+</main>
