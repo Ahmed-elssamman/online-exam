@@ -13,22 +13,22 @@ import { LoginData } from './login.model';
   templateUrl: './login.html',
 })
 export class Login {
-  readonly loginMessage = signal('');
-  readonly loginModel = signal<LoginData>({ username: '', password: '' });
-  readonly loginForm = form(this.loginModel, (path) => {
+  loginMessage = signal('');
+  loginModel = signal<LoginData>({ username: '', password: '' });
+  loginForm = form(this.loginModel, (path) => {
     required(path.username, { message: 'Your username is required' });
     minLength(path.username, 3, { message: 'Username must be at least 3 characters' });
     required(path.password, { message: 'Your password is required' });
     minLength(path.password, 8, { message: 'Password must be at least 8 characters' });
   });
 
-  readonly usernameConfig: CustomFormFieldConfig = {
+  usernameConfig: CustomFormFieldConfig = {
     label: 'username',
     placeholder: 'Enter your username',
     type: 'text',
   };
 
-  readonly passwordConfig: CustomFormFieldConfig = {
+  passwordConfig: CustomFormFieldConfig = {
     label: 'password',
     placeholder: 'Enter your password',
     type: 'password',

@@ -8,5 +8,5 @@ import { ButtonModule } from 'primeng/button';
   templateUrl: './app.html',
 })
 export class App {
-  protected readonly title = signal('online-exam');
+  protected title = signal('online-exam');
 }
