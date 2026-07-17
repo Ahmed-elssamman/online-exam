@@ -1,12 +1,34 @@
-<p>login works!</p>
-<p>login works!</p>
-<p>login works!</p>
-<p>login works!</p>
-<p>login works!</p>
-<p>login works!</p>
-<p>login works!</p>
-<p>login works!</p>
-<p>login works!</p>
-<p>login works!</p>
-<p>login works!</p>
-<p>login works!</p>
+<form
+  (submit)="onSubmit($event)"
+  class="flex flex-col gap-5 p-8 h-full justify-center max-w-sm mx-auto"
+>
+  <h1 class="text-3xl font-bold mb-10">Login</h1>
+
+  <app-form-field [config]="usernameConfig" [field]="loginForm.username" />
+
+  <div class="flex flex-col gap-1">
+    <app-form-field [config]="passwordConfig" [field]="loginForm.password" />
+    <a routerLink="/auth/forgot-password" class="text-sm text-site-primary self-end mt-1">
+      Forgot your password?
+    </a>
+  </div>
+
+  @if (loginMessage()) {
+    <p class="text-sm text-green-600" role="status">{{ loginMessage() }}</p>
+  }
+
+  <site-btn
+    [config]="{
+      label: 'Login',
+      type: 'submit',
+      loading: loginForm().submitting(),
+      disabled: loginForm().submitting(),
+      styleClass: 'w-full bg-site-primary',
+    }"
+  />
+
+  <p class="text-sm text-center text-gray-500 ">
+    Don&apos;t have an account?
+    <a routerLink="/auth/register" class="text-site-primary">Create yours</a>
+  </p>
+</form>
