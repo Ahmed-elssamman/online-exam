@@ -6,11 +6,11 @@
   }
 
   <div class="relative w-full p-1">
-    <input pInputText [id]="inputId()" [type]="isPassword() ? (showPassword() ? 'text' : 'password') : config().type"
+    <input [id]="inputId()" [type]="isPassword() ? (showPassword() ? 'text' : 'password') : config().type"
       [formField]="field()" [placeholder]="config().placeholder"
       [attr.aria-describedby]="showError() ? inputId() + '-errors' : null" [attr.aria-invalid]="showError()"
-      class="custom-form-input w-full border-1 border-gray-300" [class.pr-10]="isPassword()"
-      [class.border-red-500]="showError()" />
+      class="w-full rounded-md border border-gray-300 px-3 py-2.5 placeholder:text-gray-500 focus:outline-site-primary aria-invalid:border-red-500"
+      [class.pr-10]="isPassword()" />
 
     @if (isPassword()) {
     <button type="button" [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'"
