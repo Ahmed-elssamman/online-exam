@@ -7,7 +7,6 @@ import { LUCIDE_ICONS, LucideAngularModule, LucideIconProvider, MoveLeft } from 
   selector: 'app-sent-otp',
   imports: [RouterLink, LucideAngularModule],
   templateUrl: './sent-otp.html',
-  styles: ``,
   providers: [
     { provide: LUCIDE_ICONS, multi: true, useValue: new LucideIconProvider({ MoveLeft }) },
   ],

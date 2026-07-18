@@ -1,19 +1,13 @@
 import { Component, computed, input, signal } from '@angular/core';
 import { FieldTree, FormField as SignalFormField } from '@angular/forms/signals';
-import { InputTextModule } from 'primeng/inputtext';
 import { Eye, EyeOff, LUCIDE_ICONS, LucideAngularModule, LucideIconProvider } from 'lucide-angular';
 import { CustomFormFieldConfig } from './form-field.model';
 
 @Component({
   selector: 'app-form-field',
   standalone: true,
-  imports: [InputTextModule, SignalFormField, LucideAngularModule],
+  imports: [SignalFormField, LucideAngularModule],
   templateUrl: './form-field.html',
-  styles: `
-    .custom-form-input {
-      --p-inputtext-invalid-border-color: var(--color-gray-300);
-    }
-  `,
   providers: [
     { provide: LUCIDE_ICONS, multi: true, useValue: new LucideIconProvider({ Eye, EyeOff }) },
   ],

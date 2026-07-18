@@ -4,12 +4,12 @@
         <lucide-icon name="move-left"></lucide-icon>
     </div>
     <div class="flex flex-col gap-5">
-        <h1 class="text-3xl font-bold text-gray-900"> {{ sentOtpData()?.title }}</h1>
+        <h1 class="text-3xl font-bold text-gray-900"> {{ sentOtpData().title }}</h1>
         <p class="text-sm text-gray-500 mt-1">We have sent a password reset link to:
 
             <span class=" text-site-primary">user@example.com</span>
         </p>
-        @for(item of sentOtpData()?.desLast; track item){
+        @for(item of sentOtpData().desLast; track item){
         <p class="text-sm text-gray-500 mt-1">{{item}}</p>
         }
     </div>
