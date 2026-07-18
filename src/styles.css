@@ -1,2 +1,10 @@
 @import './styles/variables.css';
 @import 'tailwindcss';
+
+.register-stepper .p-step.p-disabled {
+  opacity: 1;
+}
+
+.register-stepper .p-step:has(~ .p-step-active) .p-stepper-separator {
+  background: #155dfc;
+}
