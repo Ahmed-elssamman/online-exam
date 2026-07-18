@@ -12,6 +12,7 @@ import { CustomFormFieldConfig } from './form-field.model';
   styles: `
     .custom-form-input {
       --p-inputtext-invalid-border-color: var(--color-gray-300);
+      --p-inputtext-invalid-placeholder-color: var(--p-inputtext-placeholder-color);
     }
   `,
   providers: [
