@@ -1,0 +1,31 @@
+<main class="flex min-h-full items-center justify-center px-8 py-12">
+  <section class="w-full max-w-sm">
+    <h1 class="mb-4 text-2xl font-bold text-site-black">Create Account</h1>
+
+    <label class="flex flex-col gap-1.5 text-sm font-medium text-site-black" for="register-email">
+      <span>Email</span>
+      <input
+        id="register-email"
+        type="email"
+        placeholder="user@example.com"
+        class="border border-gray-200 px-3 py-2.5 text-sm font-normal outline-none placeholder:text-gray-400 focus:border-site-primary"
+      />
+    </label>
+
+    <site-btn
+      class="mt-6 block"
+      routerLink="/auth/register"
+      [config]="{
+        label: 'Next  ›',
+        fullWidth: true,
+        styleClass:
+          'w-full bg-site-white text-site-black border border-site-primary hover:bg-site-primary/10',
+      }"
+    />
+
+    <p class="mt-6 text-center text-sm text-gray-500">
+      Already have an account?
+      <a routerLink="/auth/login" class="text-site-primary hover:underline">Login</a>
+    </p>
+  </section>
+</main>

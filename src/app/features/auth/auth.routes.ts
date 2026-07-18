@@ -9,9 +9,35 @@ export const authRoutes: Routes = [
                 path: 'login',
                 loadComponent: () => import('./components/login/login').then(m => m.Login)
             },
+
+            {
+                path: 'register',
+                loadComponent: () => import('./components/register/register').then(m => m.Register),
+                children: [
+                    {
+                        path: 'email',
+                        loadComponent: () => import('./components/register/email/register-email').then(m => m.RegisterEmail)
+                    }
+                ]
+            },
             {
                 path: 'forgot-password',
-                loadComponent: () => import('./components/forgot-password/forgot-password').then(m => m.ForgotPassword)
+                loadComponent: () => import('./components/forgot-password/forgot-password').then(m => m.ForgotPassword),
+                children: [
+                    {
+                        path: 'sent-otp',
+                        loadComponent: () => import('./components/forgot-password/sent-otp/sent-otp').then(m => m.SentOtp)
+                    },
+                    {
+                        path: 'new-password',
+                        loadComponent: () => import('./components/forgot-password/new-password/new-password').then(m => m.NewPassword)
+                    },
+                    {
+                        path: '',
+                        redirectTo: 'sent-otp',
+                        pathMatch: 'full'
+                    }
+                ]
             },
             {
                 path: 'sent-otp',

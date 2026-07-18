@@ -1,0 +1,182 @@
+<main class="flex min-h-full items-center justify-center px-8 py-12">
+    <p-stepper [(value)]="activeStep" class="register-stepper w-full max-w-md min-w-0 text-site-primary"
+        [linear]="true">
+        <p-step-list>
+            <p-step [value]="1">
+                <ng-template #content let-value="value">
+                    <span class="flex size-5 items-center justify-center"
+                        [class.drop-shadow-md]="value === activeStep()">
+                        <svg lucideDiamond [attr.fill]="value <= activeStep() ? '#155DFC' : '#ffffff'" stroke="#155DFC"
+                            [attr.stroke-width]="value <= activeStep() ? 0 : 1.5" class="size-4" />
+                    </span>
+                </ng-template>
+            </p-step>
+
+            <p-step [value]="2">
+                <ng-template #content let-value="value">
+                    <span class="flex size-5 items-center justify-center"
+                        [class.drop-shadow-md]="value === activeStep()">
+                        <svg lucideDiamond [attr.fill]="value <= activeStep() ? '#155DFC' : '#ffffff'" stroke="#155DFC"
+                            [attr.stroke-width]="value <= activeStep() ? 0 : 1.5" class="size-4" />
+                    </span>
+                </ng-template>
+            </p-step>
+
+            <p-step [value]="3">
+                <ng-template #content let-value="value">
+                    <span class="flex size-5 items-center justify-center"
+                        [class.drop-shadow-md]="value === activeStep()">
+                        <svg lucideDiamond [attr.fill]="value <= activeStep() ? '#155DFC' : '#ffffff'" stroke="#155DFC"
+                            [attr.stroke-width]="value <= activeStep() ? 0 : 1.5" class="size-4" />
+                    </span>
+                </ng-template>
+            </p-step>
+
+            <p-step [value]="4">
+                <ng-template #content let-value="value">
+                    <span class="flex size-5 items-center justify-center"
+                        [class.drop-shadow-md]="value === activeStep()">
+                        <svg lucideDiamond [attr.fill]="value <= activeStep() ? '#155DFC' : '#ffffff'" stroke="#155DFC"
+                            [attr.stroke-width]="value <= activeStep() ? 0 : 1.5" class="size-4" />
+                    </span>
+                </ng-template>
+            </p-step>
+        </p-step-list>
+
+        <p-step-panels>
+            <p-step-panel [value]="1">
+                <ng-template #content></ng-template>
+            </p-step-panel>
+
+            <p-step-panel [value]="2">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <section class="mx-auto flex min-h-96 max-w-sm flex-col gap-10 pt-4">
+                        <header>
+                            <h1 class="text-2xl font-bold text-site-black">Create Account</h1>
+                            <h2 class="mt-2 text-xl font-bold text-site-primary">Verify OTP</h2>
+                            <p class="mt-2 text-sm text-gray-500">
+                                Please enter the 6-digits code we have sent to:
+                            </p>
+                            <p class="mt-1 flex items-center text-sm text-gray-500">
+                                <span class="font-semibold">user@example.com.</span>
+                                <a class="ms-1 cursor-pointer text-site-primary underline"
+                                    routerLink="/auth/register/email">Edit</a>
+                            </p>
+                        </header>
+
+                        <p-inputotp [ngModel]="otpValue()" (ngModelChange)="otpValue.set($event)" [length]="6"
+                            [integerOnly]="true"
+                            class="my-auto flex w-full gap-3 *:aspect-square *:min-w-0 *:flex-1 **:text-2xl! **:font-bold!" />
+
+                        <footer>
+                            <p class="mb-2 text-sm text-gray-500">You can request another code in: 60s</p>
+                            <site-btn (fireBtn)="activateCallback(3)" [config]="{
+                  label: 'Verify Code',
+                  fullWidth: true,
+                  styleClass:
+                    'w-full bg-site-white text-site-black border-site-primary hover:bg-site-primary/20',
+                  disabled: otpValue().length !== 6,
+                }" />
+                        </footer>
+                    </section>
+                </ng-template>
+            </p-step-panel>
+
+            <p-step-panel [value]="3">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <section class="mx-auto max-w-sm pt-4">
+                        <header class="mb-7">
+                            <h1 class="text-2xl font-bold text-site-black">Create Account</h1>
+                            <h2 class="mt-2 text-xl font-bold text-site-primary">Tell us more about you</h2>
+                        </header>
+
+                        <div class="grid grid-cols-2 gap-3">
+                            <label class="flex min-w-0 flex-col gap-1.5 text-sm font-medium text-site-black"
+                                for="first-name">
+                                <span>First name<span class="text-red-500">*</span></span>
+                                <input id="first-name" type="text" [ngModel]="firstName()"
+                                    (ngModelChange)="firstName.set($event)" placeholder="Ahmed"
+                                    class="min-w-0 border border-gray-200 px-3 py-2.5 text-sm font-normal outline-none placeholder:text-gray-400 focus:border-site-primary" />
+                            </label>
+
+                            <label class="flex min-w-0 flex-col gap-1.5 text-sm font-medium text-site-black"
+                                for="last-name">
+                                <span>Last name<span class="text-red-500">*</span></span>
+                                <input id="last-name" type="text" [ngModel]="lastName()"
+                                    (ngModelChange)="lastName.set($event)" placeholder="Abdullah"
+                                    class="min-w-0 border border-gray-200 px-3 py-2.5 text-sm font-normal outline-none placeholder:text-gray-400 focus:border-site-primary" />
+                            </label>
+                        </div>
+
+                        <label class="mt-4 flex flex-col gap-1.5 text-sm font-medium text-site-black" for="username">
+                            <span>Username<span class="text-red-500">*</span></span>
+                            <input id="username" type="text" [ngModel]="username()"
+                                (ngModelChange)="username.set($event)" placeholder="user123"
+                                class="border border-gray-200 px-3 py-2.5 text-sm font-normal outline-none placeholder:text-gray-400 focus:border-site-primary" />
+                        </label>
+
+                        <label class="mt-4 flex flex-col gap-1.5 text-sm font-medium text-site-black" for="phone">
+                            <span>Phone</span>
+                            <span class="flex items-center border border-gray-200 focus-within:border-site-primary">
+                                <span
+                                    class="flex shrink-0 items-center gap-1.5 border-e border-gray-100 px-3 py-2.5 text-xs">
+                                    <span class="flex h-3 w-5 flex-col overflow-hidden border border-gray-200"
+                                        aria-hidden="true">
+                                        <span class="flex-1 bg-red-600"></span>
+                                        <span class="flex-1 bg-white"></span>
+                                        <span class="flex-1 bg-black"></span>
+                                    </span>
+                                    <span>EG (+20)</span>
+                                </span>
+                                <input id="phone" type="tel" [ngModel]="phone()" (ngModelChange)="phone.set($event)"
+                                    placeholder="1012345678"
+                                    class="min-w-0 flex-1 px-3 py-2.5 text-sm font-normal outline-none placeholder:text-gray-400" />
+                            </span>
+                        </label>
+
+                        <site-btn class="mt-8 block" (fireBtn)="activateCallback(4)" [config]="{
+                label: 'Next  ›',
+                fullWidth: true,
+                styleClass:
+                  'w-full bg-site-white text-site-black border border-site-primary hover:bg-site-primary/10',
+              }" />
+                    </section>
+                </ng-template>
+            </p-step-panel>
+
+            <p-step-panel [value]="4">
+                <ng-template #content>
+                    <section class="mx-auto max-w-sm pt-4">
+                        <header class="mb-7">
+                            <h1 class="text-2xl font-bold text-site-black">Create Account</h1>
+                            <h2 class="mt-2 text-xl font-bold text-site-primary">Create a strong password</h2>
+                        </header>
+
+                        <label class="flex flex-col gap-1.5 text-sm font-medium text-site-black" for="password">
+                            <span>Password<span class="text-red-500">*</span></span>
+                            <p-password inputId="password" [ngModel]="password()" (ngModelChange)="password.set($event)"
+                                placeholder="••••••••" [feedback]="false" [toggleMask]="true" styleClass="w-full"
+                                inputStyleClass="w-full border-0 border-b border-gray-200 rounded-none px-2 py-2.5 text-sm outline-none focus:border-site-primary" />
+                        </label>
+
+                        <label class="mt-4 flex flex-col gap-1.5 text-sm font-medium text-site-black"
+                            for="confirm-password">
+                            <span>Confirm Password<span class="text-red-500">*</span></span>
+                            <p-password inputId="confirm-password" [ngModel]="confirmPassword()"
+                                (ngModelChange)="confirmPassword.set($event)" placeholder="••••••••" [feedback]="false"
+                                [toggleMask]="true" styleClass="w-full"
+                                inputStyleClass="w-full border-0 border-b border-gray-200 rounded-none px-2 py-2.5 text-sm outline-none focus:border-site-primary" />
+                        </label>
+
+                        <site-btn class="mt-8 block" [config]="{
+                label: 'Create Account',
+                fullWidth: true,
+                styleClass:
+                  'w-full bg-site-primary border-site-primary text-white hover:bg-blue-700',
+              }" />
+                    </section>
+                </ng-template>
+            </p-step-panel>
+        </p-step-panels>
+    </p-stepper>
+</main>
