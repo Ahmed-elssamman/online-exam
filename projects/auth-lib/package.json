@@ -1,6 +1,23 @@
 {
-  "name": "auth-lib",
-  "version": "0.0.1",
+  "name": "@ahmed_elssamman/auth-lib",
+  "version": "1.1.0",
+  "description": "⚡ A powerful, lightweight Angular 21 authentication library featuring seamless Login, Registration, OTP Email Verification, Password Reset, and Response Adapters.",
+  "author": "Ahmed El-Samman",
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "angular21",
+    "authentication",
+    "auth-lib",
+    "login",
+    "register",
+    "forgot-password",
+    "reset-password",
+    "verify-email",
+    "otp",
+    "signals",
+    "rxjs"
+  ],
   "peerDependencies": {
     "@angular/common": "^21.2.0",
     "@angular/core": "^21.2.0"

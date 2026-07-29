@@ -5,7 +5,7 @@ import { providePrimeNG } from 'primeng/config';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { API_CONFIG } from 'auth-lib';
+import { API_CONFIG } from '@ahmed_elssamman/auth-lib';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),

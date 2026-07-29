@@ -5,7 +5,7 @@ import { forgotPasswordConfig } from '@core/constants/forgot-password';
 import { CustomFormField } from '@shared/components/ui/form-field/form-field';
 import { CustomFormFieldConfig } from '@shared/components/ui/form-field/form-field.model';
 import { SiteBtn } from '@shared/components/ui/site-btn/site-btn';
-import { AuthLib } from 'auth-lib';
+import { AuthLib } from '@ahmed_elssamman/auth-lib';
 import { environment } from 'environments/environment.development';
 
 @Component({

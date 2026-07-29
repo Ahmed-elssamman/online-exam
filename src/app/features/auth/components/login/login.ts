@@ -5,7 +5,7 @@ import { CustomFormField } from '@shared/components/ui/form-field/form-field';
 import { CustomFormFieldConfig } from '@shared/components/ui/form-field/form-field.model';
 import { SiteBtn } from '@shared/components/ui/site-btn/site-btn';
 import { LoginData } from './login.model';
-import { AuthLib } from 'auth-lib';
+import { AuthLib } from '@ahmed_elssamman/auth-lib';
 import { Router } from '@angular/router';
 
 @Component({

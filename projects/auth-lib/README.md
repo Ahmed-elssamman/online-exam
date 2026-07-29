@@ -1,64 +1,138 @@
-# AuthLib
+# 🔐 @ahmed_elssamman/auth-lib
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.0.
+<div align="center">
 
-## Code scaffolding
+[![Angular Version](https://img.shields.io/badge/Angular-21.2.0+-DD0031?style=for-the-badge&logo=angular&logoColor=white)](https://angular.dev)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9+-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![RxJS](https://img.shields.io/badge/RxJS-7.8+-B7178C?style=for-the-badge&logo=reactivex&logoColor=white)](https://rxjs.dev)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+**⚡ A modern, lightweight, and signal-ready Angular 21 Authentication Library**  
+Designed for robust enterprise login, registration workflows, OTP email verification, password resets, and flexible data adaptation.
 
-```bash
-ng generate component component-name
-```
+[Features](#-key-features) • [Installation](#-installation) • [Quick Start](#-quick-start) • [API Reference](#-api-reference) • [Configuration](#-configuration)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+</div>
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## ✨ Key Features
 
-To build the library, run:
+- 🔑 **Complete Auth Lifecycle**: Out-of-the-box support for Login, Register, Password Reset, and OTP Verification.
+- 📩 **OTP Email Verification**: Built-in 2-step email verification workflow.
+- 🔄 **Data Adaptation**: Integrated `AuthAdapterService` to transform raw backend HTTP responses into standardized client models.
+- ⚡ **Angular 21 & Signals Ready**: Built for modern Angular standalone components and Signal Forms.
+- 🎯 **Custom Endpoint Overrides**: Pass custom backend endpoints on a per-method basis without changing global config.
+- 🛡️ **Type-Safe Interfaces**: Fully typed request and response payloads with strict TypeScript definitions.
 
-```bash
-ng build auth-lib
-```
+---
 
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
+## 📦 Installation
 
-### Publishing the Library
-
-Once the project is built, you can publish your library by following these steps:
-
-1. Navigate to the `dist` directory:
-
-   ```bash
-   cd dist/auth-lib
-   ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Install the package via **npm**:
 
 ```bash
-ng test
+npm install @ahmed_elssamman/auth-lib
 ```
 
-## Running end-to-end tests
+---
 
-For end-to-end (e2e) testing, run:
+## 🚀 Quick Start
 
-```bash
-ng e2e
+### 1. Provide API Configuration
+
+In your `app.config.ts` or main application providers, register the `API_CONFIG` provider:
+
+```typescript
+import { ApplicationConfig } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
+import { API_CONFIG } from '@ahmed_elssamman/auth-lib';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideHttpClient(),
+    {
+      provide: API_CONFIG,
+      useValue: {
+        baseUrl: 'https://api.yourdomain.com/api/v1',
+        clientName: 'Name-App',
+      },
+    },
+  ],
+};
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+---
 
-## Additional Resources
+### 2. Inject and Use `AuthLib`
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Inject `AuthLib` into your component or feature service:
+
+```typescript
+import { Component, inject } from '@angular/core';
+import { AuthLib, IAuthLoginRequest } from '@ahmed_elssamman/auth-lib';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-login',
+  standalone: true,
+  templateUrl: './login.component.html',
+})
+export class LoginComponent {
+  private readonly authLib = inject(AuthLib);
+  private readonly router = inject(Router);
+
+  onLogin(credentials: IAuthLoginRequest): void {
+    this.authLib.login(credentials).subscribe({
+      next: (adaptedResponse) => {
+        console.log('Login Successful:', adaptedResponse.token, adaptedResponse.user);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => console.error('Login Failed:', err),
+    });
+  }
+}
+```
+
+---
+
+## 📚 API Reference
+
+### `AuthLib` Methods
+
+| Method | Parameters | Description | Returns |
+| :--- | :--- | :--- | :--- |
+| `login` | `userData: IAuthLoginRequest`, `customEndpoint?: string` | Authenticates user credentials and adapts token & user data. | `Observable<IAuthAdaptedResponse>` |
+| `register` | `userData: Partial<IAuthRegisterInterface>`, `customEndpoint?: string` | Registers a new user account. | `Observable<IAuthAdaptedResponse>` |
+| `sendEmailForVerification` | `email: string`, `customEndpoint?: string` | Triggers an OTP verification email to the user. | `Observable<any>` |
+| `verifyEmail` | `userData: { email: string; code: string }`, `customEndpoint?: string` | Validates the OTP code received via email. | `Observable<any>` |
+| `forgotPassword` | `userData: { email: string; redirectUrl?: string }`, `customEndpoint?: string` | Initiates password recovery process. | `Observable<any>` |
+| `resetPassword` | `userData: { token: string; newPassword: string; confirmPassword: string }`, `customEndpoint?: string` | Sets a new password using reset token. | `Observable<any>` |
+
+---
+
+## 🛠️ Advanced Customization
+
+> [!TIP]
+> **Overriding Endpoints Dynamically**  
+> If your API has custom routes for specific features (e.g. `/v2/auth/quick-login`), you can pass a custom endpoint string directly to any method call:
+
+```typescript
+this.authLib.login(credentials, '/v2/auth/quick-login').subscribe(...);
+```
+
+> [!NOTE]
+> **Data Adapter pattern**  
+> By default, `login()` and `register()` pipe response data through `AuthAdapterService`. This normalizes user objects, status codes, and JWT tokens across varying backend API response shapes.
+
+---
+
+## 📄 License
+
+Distributed under the **MIT License**. See `LICENSE` for more information.
+
+---
+
+<div align="center">
+  Crafted with ❤️ by <b>Ahmed El-Samman</b>
+</div>

@@ -6,7 +6,7 @@ import { CustomFormField } from '@shared/components/ui/form-field/form-field';
 import { SiteBtn } from '@shared/components/ui/site-btn/site-btn';
 import { newPasswordConfig } from '@core/constants/forgot-password';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { AuthLib } from 'auth-lib';
+import { AuthLib } from '@ahmed_elssamman/auth-lib';
 
 @Component({
   selector: 'app-new-password',

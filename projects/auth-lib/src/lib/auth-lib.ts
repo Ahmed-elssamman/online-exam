@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { AUTH_ENDPOINTS } from './constants/auth-endpoints';
 import { IAuthRegisterInterface } from './models/auth-register.interface';
 import { IAuthLoginRequest } from './models/auth-login.model';
-import { IAuthResetPasswordRequest } from './models/auth-resetPassword.model';
 import { AuthAdapterService } from './adapter/auth-adapter.service';
 import { map } from 'rxjs';
 import { IAuthResponseInterface } from './models/auth-response.interface';
@@ -52,6 +51,11 @@ export class AuthLib {
   resetPassword(userData: {token: string, newPassword: string, confirmPassword: string}, customEndpoint?: string) {
     const endpoint = customEndpoint ? customEndpoint : AUTH_ENDPOINTS.RESET_PASSWORD;
     return this.http.post(`${this.api_config.baseUrl}${endpoint}`, userData);
+  }
+
+  logout():string{
+    localStorage.clear();
+    return "You logged out successfully ,come back soon ❤️";
   }
 
 }

@@ -6,7 +6,7 @@ import { InputOtpModule } from 'primeng/inputotp';
 import { PasswordModule } from 'primeng/password';
 import { StepperModule } from 'primeng/stepper';
 import { SiteBtn } from '@shared/components/ui/site-btn/site-btn';
-import { AuthLib } from 'auth-lib';
+import { AuthLib } from '@ahmed_elssamman/auth-lib';
 import { RegisterData } from './register.model';
 
 @Component({
