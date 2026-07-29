@@ -16,9 +16,16 @@
     "module": "preserve",
     "baseUrl": "src",
     "paths": {
-      "@shared/*": ["shared/*"],
-      "@core/*": ["core/*"],
-      "auth-lib": ["./dist/auth-lib"]
+      "@shared/*": [
+        "shared/*"
+      ],
+      "@core/*": [
+        "core/*"
+      ],
+      "auth-lib": [
+        "../projects/auth-lib/src/public-api.ts",
+        "../dist/auth-lib"
+      ]
     }
   },
   "angularCompilerOptions": {

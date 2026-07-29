@@ -1,10 +1,12 @@
-import { Component, signal } from '@angular/core';
-import { form, minLength, required, submit } from '@angular/forms/signals';
+import { Component, inject, signal } from '@angular/core';
+import { form, minLength, required } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 import { CustomFormField } from '@shared/components/ui/form-field/form-field';
 import { CustomFormFieldConfig } from '@shared/components/ui/form-field/form-field.model';
 import { SiteBtn } from '@shared/components/ui/site-btn/site-btn';
 import { LoginData } from './login.model';
+import { AuthLib } from 'auth-lib';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,9 @@ import { LoginData } from './login.model';
   templateUrl: './login.html',
 })
 export class Login {
-  loginMessage = signal('');
+  authLib = new AuthLib();
+  private readonly router = inject(Router);
+
   loginModel = signal<LoginData>({ username: '', password: '' });
   loginForm = form(this.loginModel, (path) => {
     required(path.username, { message: 'Your username is required' });
@@ -34,6 +38,11 @@ export class Login {
     type: 'password',
   };
 
-  onSubmit(event: SubmitEvent) { }
+  onSubmit(event: SubmitEvent) {
+    event.preventDefault();
+    this.authLib.login(this.loginForm().value()).subscribe((response) => {
+      this.router.navigate(['/']);
+    });
+  }
 
 }

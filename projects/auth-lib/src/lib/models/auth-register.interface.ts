@@ -8,8 +8,8 @@ export interface IAuthEmailVerificationRequest {
 
 export interface IAuthRegisterInterface {
     username?: string;
-    email: string;
-    password: string;
+    email?: string;
+    password?: string;
     confirmPassword?: string;
     firstName?: string;
     lastName?: string;

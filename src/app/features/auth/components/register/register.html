@@ -53,12 +53,13 @@
 
                         <label class="flex flex-col gap-1.5 text-sm font-medium text-site-black" for="register-email">
                             <span>Email</span>
-                            <input id="register-email" type="email" [ngModel]="email()"
-                                (ngModelChange)="email.set($event)" placeholder="user@example.com"
+                            <input id="register-email" type="email" [ngModel]="registerData().email"
+                                (ngModelChange)="registerData.update((r) => ({ ...r, email: $event }))"
+                                placeholder="user@example.com"
                                 class="border border-gray-200 px-3 py-2.5 text-sm font-normal outline-none placeholder:text-gray-400 focus:border-site-primary" />
                         </label>
 
-                        <site-btn class="mt-6 block" (fireBtn)="activateCallback(2)" [config]="{
+                        <site-btn class="mt-6 block" (fireBtn)="sendEmailToVerify(2,$event)" [config]="{
                 label: 'Next  ›',
                 fullWidth: true,
                 styleClass:
@@ -82,8 +83,8 @@
                             <p class="mt-2 text-sm text-gray-500">
                                 Please enter the 6-digits code we have sent to:
                             </p>
-                            <p class="mt-1 flex items-center text-sm text-gray-500">
-                                <span class="font-semibold">{{ email() || 'user@example.com' }}.</span>
+                            <p class="mt-1 flex items-center text-sm ">
+                                <span class="font-semibold">{{ registerData().email || 'user@example.com' }}.</span>
                                 <a class="ms-1 cursor-pointer text-site-primary underline"
                                     (click)="activateCallback(1)">Edit</a>
                             </p>
@@ -95,7 +96,7 @@
 
                         <footer>
                             <p class="mb-2 text-sm text-gray-500">You can request another code in: 60s</p>
-                            <site-btn (fireBtn)="activateCallback(3)" [config]="{
+                            <site-btn (fireBtn)="verifyOtp(3)" [config]="{
                   label: 'Verify Code',
                   fullWidth: true,
                   styleClass:
@@ -119,24 +120,27 @@
                             <label class="flex min-w-0 flex-col gap-1.5 text-sm font-medium text-site-black"
                                 for="first-name">
                                 <span>First name<span class="text-red-500">*</span></span>
-                                <input id="first-name" type="text" [ngModel]="firstName()"
-                                    (ngModelChange)="firstName.set($event)" placeholder="Ahmed"
+                                <input id="first-name" type="text" [ngModel]="registerData().firstName"
+                                    (ngModelChange)="registerData.update((r) => ({ ...r, firstName: $event }))"
+                                    placeholder="Ahmed"
                                     class="min-w-0 border border-gray-200 px-3 py-2.5 text-sm font-normal outline-none placeholder:text-gray-400 focus:border-site-primary" />
                             </label>
 
                             <label class="flex min-w-0 flex-col gap-1.5 text-sm font-medium text-site-black"
                                 for="last-name">
                                 <span>Last name<span class="text-red-500">*</span></span>
-                                <input id="last-name" type="text" [ngModel]="lastName()"
-                                    (ngModelChange)="lastName.set($event)" placeholder="Abdullah"
+                                <input id="last-name" type="text" [ngModel]="registerData().lastName"
+                                    (ngModelChange)="registerData.update((r) => ({ ...r, lastName: $event }))"
+                                    placeholder="Abdullah"
                                     class="min-w-0 border border-gray-200 px-3 py-2.5 text-sm font-normal outline-none placeholder:text-gray-400 focus:border-site-primary" />
                             </label>
                         </div>
 
                         <label class="mt-4 flex flex-col gap-1.5 text-sm font-medium text-site-black" for="username">
                             <span>Username<span class="text-red-500">*</span></span>
-                            <input id="username" type="text" [ngModel]="username()"
-                                (ngModelChange)="username.set($event)" placeholder="user123"
+                            <input id="username" type="text" [ngModel]="registerData().username"
+                                (ngModelChange)="registerData.update((r) => ({ ...r, username: $event }))"
+                                placeholder="user123"
                                 class="border border-gray-200 px-3 py-2.5 text-sm font-normal outline-none placeholder:text-gray-400 focus:border-site-primary" />
                         </label>
 
@@ -153,13 +157,14 @@
                                     </span>
                                     <span>EG (+20)</span>
                                 </span>
-                                <input id="phone" type="tel" [ngModel]="phone()" (ngModelChange)="phone.set($event)"
+                                <input id="phone" type="tel" [ngModel]="registerData().phone"
+                                    (ngModelChange)="registerData.update((r) => ({ ...r, phone: $event }))"
                                     placeholder="1012345678"
                                     class="min-w-0 flex-1 px-3 py-2.5 text-sm font-normal outline-none placeholder:text-gray-400" />
                             </span>
                         </label>
 
-                        <site-btn class="mt-8 block" (fireBtn)="activateCallback(4)" [config]="{
+                        <site-btn class="mt-8 block" (fireBtn)="addAdditionalUserInfo(4 ,$event)" [config]="{
                 label: 'Next  ›',
                 fullWidth: true,
                 styleClass:
@@ -179,26 +184,30 @@
 
                         <label class="flex flex-col gap-1.5 text-sm font-medium text-site-black" for="password">
                             <span>Password<span class="text-red-500">*</span></span>
-                            <p-password inputId="password" [ngModel]="password()" (ngModelChange)="password.set($event)"
-                                placeholder="••••••••" [feedback]="false" [toggleMask]="true" styleClass="w-full"
+                            <p-password inputId="password" [ngModel]="registerData().password"
+                                (ngModelChange)="registerData.update((r) => ({ ...r, password: $event }))"
+                                placeholder="••••••••" [feedback]="false" [toggleMask]="true" class="w-full"
                                 inputStyleClass="w-full border-0 border-b border-gray-200 rounded-none px-2 py-2.5 text-sm outline-none focus:border-site-primary" />
                         </label>
 
                         <label class="mt-4 flex flex-col gap-1.5 text-sm font-medium text-site-black"
                             for="confirm-password">
                             <span>Confirm Password<span class="text-red-500">*</span></span>
-                            <p-password inputId="confirm-password" [ngModel]="confirmPassword()"
-                                (ngModelChange)="confirmPassword.set($event)" placeholder="••••••••" [feedback]="false"
-                                [toggleMask]="true" styleClass="w-full"
+                            <p-password inputId="confirm-password" [ngModel]="registerData().confirmPassword"
+                                (ngModelChange)="registerData.update((r) => ({ ...r, confirmPassword: $event }))"
+                                placeholder="••••••••" [feedback]="false" [toggleMask]="true" class="w-full"
                                 inputStyleClass="w-full border-0 border-b border-gray-200 rounded-none px-2 py-2.5 text-sm outline-none focus:border-site-primary" />
                         </label>
+                        @if (!passwordsMatch()) {
+                        <p class="text-red-500 text-sm">Passwords do not match</p>
+                        }
 
                         <site-btn class="mt-8 block" [config]="{
                 label: 'Create Account',
                 fullWidth: true,
                 styleClass:
                   'w-full bg-site-primary border-site-primary text-white hover:bg-blue-700',
-              }" />
+              }" (fireBtn)="passwordsMatch() && register($event)" />
                     </section>
                 </ng-template>
             </p-step-panel>

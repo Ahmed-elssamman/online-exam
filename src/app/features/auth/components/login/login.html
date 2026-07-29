@@ -9,11 +9,6 @@
       Forgot your password?
     </a>
   </div>
-
-  @if (loginMessage()) {
-  <p class="text-sm text-green-600" role="status">{{ loginMessage() }}</p>
-  }
-
   <site-btn [config]="{
       label: 'Login',
       type: 'submit',

@@ -1,10 +1,13 @@
+import { IAuthResponseInterface } from "./auth-response.interface";
+
 export interface NormalizedAuthResponse<TData = any> {
     message?: string;
     status: boolean | number;
     code: number;
-    data?: TData;
+    token?: string;
+    user?: TData;
 }
 
-export interface IAuthResponseAdapter<TRaw = any, TData = any> {
-    adapt(raw: TRaw): NormalizedAuthResponse<TData>;
+export interface IAuthResponseAdapter {
+    adapt(raw: IAuthResponseInterface<any>): NormalizedAuthResponse<any>;
 }

@@ -4,7 +4,8 @@ import Aura from '@primeng/themes/aura';
 import { providePrimeNG } from 'primeng/config';
 
 import { routes } from './app.routes';
-
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { API_CONFIG } from 'auth-lib';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
@@ -21,5 +22,13 @@ export const appConfig: ApplicationConfig = {
         },
       },
     }),
+    provideHttpClient(withFetch()),
+    {
+      provide: API_CONFIG,
+      useValue: {
+        baseUrl: 'https://exam-app.elevate-bootcamp.cloud/api',
+        clientName: 'exam-app',
+      },
+    },
   ],
 };

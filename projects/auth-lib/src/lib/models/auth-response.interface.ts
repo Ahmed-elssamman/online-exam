@@ -3,6 +3,5 @@ export interface IAuthResponseInterface<T = any> {
     code: number;
     message?: string;
     payload?: T;
-    data?: T;
     [key: string]: any;
 }
