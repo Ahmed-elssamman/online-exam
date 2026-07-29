@@ -45,7 +45,32 @@
 
         <p-step-panels>
             <p-step-panel [value]="1">
-                <ng-template #content></ng-template>
+                <ng-template #content let-activateCallback="activateCallback">
+                    <section class="mx-auto max-w-sm pt-4">
+                        <header class="mb-7">
+                            <h1 class="text-2xl font-bold text-site-black">Create Account</h1>
+                        </header>
+
+                        <label class="flex flex-col gap-1.5 text-sm font-medium text-site-black" for="register-email">
+                            <span>Email</span>
+                            <input id="register-email" type="email" [ngModel]="email()"
+                                (ngModelChange)="email.set($event)" placeholder="user@example.com"
+                                class="border border-gray-200 px-3 py-2.5 text-sm font-normal outline-none placeholder:text-gray-400 focus:border-site-primary" />
+                        </label>
+
+                        <site-btn class="mt-6 block" (fireBtn)="activateCallback(2)" [config]="{
+                label: 'Next  ›',
+                fullWidth: true,
+                styleClass:
+                  'w-full bg-site-white text-site-black border border-site-primary hover:bg-site-primary/10',
+              }" />
+
+                        <p class="mt-6 text-center text-sm text-gray-500">
+                            Already have an account?
+                            <a routerLink="/auth/login" class="text-site-primary hover:underline">Login</a>
+                        </p>
+                    </section>
+                </ng-template>
             </p-step-panel>
 
             <p-step-panel [value]="2">
@@ -58,9 +83,9 @@
                                 Please enter the 6-digits code we have sent to:
                             </p>
                             <p class="mt-1 flex items-center text-sm text-gray-500">
-                                <span class="font-semibold">user@example.com.</span>
+                                <span class="font-semibold">{{ email() || 'user@example.com' }}.</span>
                                 <a class="ms-1 cursor-pointer text-site-primary underline"
-                                    routerLink="/auth/register/email">Edit</a>
+                                    (click)="activateCallback(1)">Edit</a>
                             </p>
                         </header>
 
