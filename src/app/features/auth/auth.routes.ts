@@ -12,13 +12,7 @@ export const authRoutes: Routes = [
 
             {
                 path: 'register',
-                loadComponent: () => import('./components/register/register').then(m => m.Register),
-                children: [
-                    {
-                        path: 'email',
-                        loadComponent: () => import('./components/register/email/register-email').then(m => m.RegisterEmail)
-                    }
-                ]
+                loadComponent: () => import('./components/register/register').then(m => m.Register)
             },
             {
                 path: 'forgot-password',

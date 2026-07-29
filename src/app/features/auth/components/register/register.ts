@@ -22,7 +22,8 @@ import { SiteBtn } from '@shared/components/ui/site-btn/site-btn';
   templateUrl: './register.html',
 })
 export class Register {
-  activeStep = signal(2);
+  activeStep = signal(1);
+  email = signal('');
   otpValue = signal('482554');
 
   firstName = signal('');
