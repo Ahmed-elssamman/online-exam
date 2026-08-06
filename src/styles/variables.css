@@ -1,5 +1,10 @@
 @theme {
-   --color-site-primary: #155DFC;
-   --color-site-white: #EFF6FF;
-   --color-site-black: #1E293B;
+  --color-site-primary: #155DFC;
+  --color-site-primary-hover: #124ECB;
+  --color-site-primary-light: #E0EBFF;
+  --color-site-primary-soft: #F4F7FE;
+  --color-site-card-bg: #F2F6FF;
+  --color-site-bg: #F8FAFC;
+  --color-site-white: #EFF6FF;
+  --color-site-black: #1E293B;
 }

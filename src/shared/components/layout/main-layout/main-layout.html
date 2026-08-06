@@ -1,0 +1,6 @@
+<div class="flex h-screen w-full bg-site-bg overflow-hidden">
+  <app-sidebar [items]="sidebarItems" [user]="currentUser" (accountAction)="handleAccountAction($event)"></app-sidebar>
+  <main class="flex-1 h-screen overflow-y-auto p-6 md:p-8 lg:p-10">
+    <router-outlet></router-outlet>
+  </main>
+</div>

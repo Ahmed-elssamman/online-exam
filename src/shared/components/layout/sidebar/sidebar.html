@@ -1,0 +1,79 @@
+<div
+  class="w-64 md:w-72 h-screen flex flex-col justify-between p-5 bg-site-primary-soft border-r border-slate-200/80 flex-shrink-0">
+  <div class="mb-8 px-2">
+    <h1 class="text-3xl font-black tracking-wider text-slate-800 font-sans">
+      ELEVATE
+    </h1>
+    <div
+      class="mt-2.5 inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-site-primary text-white text-xs font-bold shadow-xs">
+      <lucide-icon name="code-xml" [size]="14"></lucide-icon>
+      <span>Exam App</span>
+    </div>
+  </div>
+
+  <nav class="flex-1 space-y-2">
+    <ng-container *ngFor="let item of items()">
+      <a *ngIf="item.isShow" [routerLink]="item.path"
+        routerLinkActive="!bg-site-primary-light !text-site-primary font-bold border border-site-primary shadow-xs"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 hover:bg-slate-200/60 transition-all duration-200 group text-sm font-medium">
+        <lucide-icon [name]="item.icon || 'graduation-cap'" [size]="18"></lucide-icon>
+        <span>{{ item.title }}</span>
+      </a>
+    </ng-container>
+  </nav>
+
+  <div class="mt-auto pt-4 border-t border-slate-200/80">
+    <div class="flex items-center justify-between p-2 rounded-xl bg-white shadow-xs border border-slate-100">
+      <div class="flex items-center gap-3 overflow-hidden">
+        <ng-container *ngIf="user().avatarUrl; else initialsTpl">
+          <img [src]="user().avatarUrl" [alt]="user().name"
+            class="w-10 h-10 rounded-lg object-cover border border-slate-200" />
+        </ng-container>
+        <ng-template #initialsTpl>
+          <div
+            class="w-10 h-10 rounded-lg bg-site-primary text-white font-bold flex items-center justify-center text-sm shadow-xs flex-shrink-0">
+            {{ userInitials }}
+          </div>
+        </ng-template>
+
+        <div class="flex flex-col truncate">
+          <span class="text-sm font-bold text-site-primary truncate leading-tight">
+            {{ user().name }}
+          </span>
+          <span class="text-xs text-slate-400 truncate leading-tight">
+            {{ user().email }}
+          </span>
+        </div>
+      </div>
+
+      <div class="relative">
+        <button type="button" (click)="toggleAccountMenu($event)"
+          class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition cursor-pointer"
+          aria-label="Account options">
+          <lucide-icon name="more-vertical" [size]="18"></lucide-icon>
+        </button>
+
+        <div *ngIf="isAccountMenuOpen()"
+          class="absolute bottom-full mb-2 right-0 w-48 bg-white text-slate-800 rounded-xl shadow-xl border border-slate-200 p-1.5 z-50 flex flex-col gap-1 transition-all duration-200">
+          <button type="button" (click)="handleAction('account')"
+            class="flex items-center gap-2.5 px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-100 hover:text-site-primary w-full text-left transition cursor-pointer">
+            <lucide-icon name="user" [size]="16"></lucide-icon>
+            <span>Account</span>
+          </button>
+          <button type="button" (click)="handleAction('dashboard')"
+            class="flex items-center gap-2.5 px-3 py-2 text-sm font-medium rounded-lg text-slate-700 hover:bg-slate-100 hover:text-site-primary w-full text-left transition cursor-pointer">
+            <lucide-icon name="layout-dashboard" [size]="16"></lucide-icon>
+            <span>Dashboard</span>
+          </button>
+          <div class="h-px bg-slate-100 my-0.5"></div>
+          <button type="button" (click)="handleAction('logout')"
+            class="flex items-center gap-2.5 px-3 py-2 text-sm font-medium rounded-lg text-red-600 hover:bg-red-50 w-full text-left transition cursor-pointer">
+            <lucide-icon name="log-out" [size]="16"></lucide-icon>
+            <span>Logout</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
