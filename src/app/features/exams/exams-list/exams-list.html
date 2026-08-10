@@ -10,12 +10,9 @@
 
   <!-- Header Banner with Back Button -->
   <div class="flex items-center gap-3 md:gap-4">
-    <button
-      type="button"
-      (click)="goBack()"
+    <button type="button" (click)="goBack()"
       class="w-12 h-12 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition shadow-2xs cursor-pointer flex-shrink-0"
-      aria-label="Go back"
-    >
+      aria-label="Go back">
       <lucide-icon name="chevron-left" [size]="22"></lucide-icon>
     </button>
 
@@ -29,54 +26,57 @@
 
   <!-- Exam Cards List -->
   <div class="space-y-4 pt-2">
-    <div
-      *ngFor="let exam of exams"
-      class="bg-site-card-bg dark:bg-slate-900/90 border border-blue-100/70 dark:border-slate-800/80 rounded-2xl p-5 md:p-6 shadow-2xs hover:shadow-md transition-all duration-200 flex flex-col md:flex-row gap-5 items-start"
-    >
+    <div *ngFor="let exam of exams"
+      class="bg-site-card-bg dark:bg-slate-900/90 border border-blue-100/70 dark:border-slate-800/80 rounded-2xl p-5 md:p-6 shadow-2xs hover:shadow-md transition-all duration-200 flex flex-col md:flex-row gap-5 items-start">
       <!-- Tech Logo Icon Box -->
-      <div class="w-20 h-20 md:w-24 md:h-24 bg-white dark:bg-slate-800 border border-blue-100 dark:border-slate-700 rounded-2xl flex items-center justify-center p-3 flex-shrink-0 shadow-2xs">
+      <div
+        class="w-20 h-20 md:w-24 md:h-24 bg-white dark:bg-slate-800 border border-blue-100 dark:border-slate-700 rounded-2xl flex items-center justify-center p-3 flex-shrink-0 shadow-2xs">
         <!-- HTML5 Icon -->
         <svg *ngIf="exam.iconType === 'html'" class="w-12 h-12" viewBox="0 0 512 512" fill="none">
-          <path d="M71 460L30 0h452l-41 460L256 512" fill="#E44D26"/>
-          <path d="M256 472l144-40 36-404H256" fill="#F16529"/>
-          <path d="M256 208h-74l-5-58h141v-48H122l15 154h119" fill="#EBEBEB"/>
-          <path d="M256 208v48h70l-7 74-63 17v50l113-31 16-158" fill="#FFFFFF"/>
+          <path d="M71 460L30 0h452l-41 460L256 512" fill="#E44D26" />
+          <path d="M256 472l144-40 36-404H256" fill="#F16529" />
+          <path d="M256 208h-74l-5-58h141v-48H122l15 154h119" fill="#EBEBEB" />
+          <path d="M256 208v48h70l-7 74-63 17v50l113-31 16-158" fill="#FFFFFF" />
         </svg>
 
         <!-- CSS3 Icon -->
         <svg *ngIf="exam.iconType === 'css'" class="w-12 h-12" viewBox="0 0 512 512" fill="none">
-          <path d="M71 460L30 0h452l-41 460L256 512" fill="#264DE4"/>
-          <path d="M256 472l144-40 36-404H256" fill="#2965F1"/>
-          <path d="M256 268H187l-4-48h73v-48H130l13 144h113" fill="#EBEBEB"/>
-          <path d="M256 268v48h70l-7 74-63 17v50l113-31 16-158" fill="#FFFFFF"/>
+          <path d="M71 460L30 0h452l-41 460L256 512" fill="#264DE4" />
+          <path d="M256 472l144-40 36-404H256" fill="#2965F1" />
+          <path d="M256 268H187l-4-48h73v-48H130l13 144h113" fill="#EBEBEB" />
+          <path d="M256 268v48h70l-7 74-63 17v50l113-31 16-158" fill="#FFFFFF" />
         </svg>
 
         <!-- JS Icon -->
         <svg *ngIf="exam.iconType === 'js'" class="w-12 h-12 rounded-lg" viewBox="0 0 512 512" fill="none">
-          <rect width="512" height="512" rx="64" fill="#F7DF1E"/>
-          <path d="M298.5 407.5c15.6 25 39.5 40 73 40 40 0 65.5-20.5 65.5-49 0-29.5-22.5-43-60-59l-13-5.5c-35-15-48-25.5-48-46.5 0-18 14.5-31.5 39-31.5 25.5 0 41 12 51.5 31.5l34.5-22.5c-16-29.5-45-47-86-47-41 0-74 25.5-74 68 0 30.5 19 46.5 56.5 62l13 5.5c39 16.5 51.5 28.5 51.5 48.5 0 20.5-17.5 33-43.5 33-31 0-48.5-16.5-60.5-38.5l-39.5 26z" fill="#000"/>
-          <path d="M165.5 407.5c11.5 20.5 26.5 36.5 54 36.5 27 0 44-13.5 44-48.5V220h-45v170.5c0 14-6 20-17 20-11 0-17.5-6.5-22.5-18l-38.5 15z" fill="#000"/>
+          <rect width="512" height="512" rx="64" fill="#F7DF1E" />
+          <path
+            d="M298.5 407.5c15.6 25 39.5 40 73 40 40 0 65.5-20.5 65.5-49 0-29.5-22.5-43-60-59l-13-5.5c-35-15-48-25.5-48-46.5 0-18 14.5-31.5 39-31.5 25.5 0 41 12 51.5 31.5l34.5-22.5c-16-29.5-45-47-86-47-41 0-74 25.5-74 68 0 30.5 19 46.5 56.5 62l13 5.5c39 16.5 51.5 28.5 51.5 48.5 0 20.5-17.5 33-43.5 33-31 0-48.5-16.5-60.5-38.5l-39.5 26z"
+            fill="#000" />
+          <path
+            d="M165.5 407.5c11.5 20.5 26.5 36.5 54 36.5 27 0 44-13.5 44-48.5V220h-45v170.5c0 14-6 20-17 20-11 0-17.5-6.5-22.5-18l-38.5 15z"
+            fill="#000" />
         </svg>
 
         <!-- React Icon -->
         <svg *ngIf="exam.iconType === 'react'" class="w-12 h-12" viewBox="0 0 100 100" fill="none">
-          <circle cx="50" cy="50" r="10" fill="#61DAFB"/>
-          <ellipse cx="50" cy="50" rx="42" ry="16" stroke="#61DAFB" stroke-width="4"/>
-          <ellipse cx="50" cy="50" rx="42" ry="16" stroke="#61DAFB" stroke-width="4" transform="rotate(60 50 50)"/>
-          <ellipse cx="50" cy="50" rx="42" ry="16" stroke="#61DAFB" stroke-width="4" transform="rotate(120 50 50)"/>
+          <circle cx="50" cy="50" r="10" fill="#61DAFB" />
+          <ellipse cx="50" cy="50" rx="42" ry="16" stroke="#61DAFB" stroke-width="4" />
+          <ellipse cx="50" cy="50" rx="42" ry="16" stroke="#61DAFB" stroke-width="4" transform="rotate(60 50 50)" />
+          <ellipse cx="50" cy="50" rx="42" ry="16" stroke="#61DAFB" stroke-width="4" transform="rotate(120 50 50)" />
         </svg>
 
         <!-- Angular Icon -->
         <svg *ngIf="exam.iconType === 'angular'" class="w-12 h-12" viewBox="0 0 250 250" fill="none">
-          <path d="M125 30L30 64l14 126 81 45 81-45 14-126L125 30z" fill="#DD0031"/>
-          <path d="M125 30v171l81-45 14-126L125 30z" fill="#C3002F"/>
-          <path d="M125 67L74 182h22l10-26h38l10 26h22L125 67zm12 73h-24l12-30 12 30z" fill="#FFFFFF"/>
+          <path d="M125 30L30 64l14 126 81 45 81-45 14-126L125 30z" fill="#DD0031" />
+          <path d="M125 30v171l81-45 14-126L125 30z" fill="#C3002F" />
+          <path d="M125 67L74 182h22l10-26h38l10 26h22L125 67zm12 73h-24l12-30 12 30z" fill="#FFFFFF" />
         </svg>
 
         <!-- Vue Icon -->
         <svg *ngIf="exam.iconType === 'vue'" class="w-12 h-12" viewBox="0 0 261 226" fill="none">
-          <path d="M161 0H261L130.5 226L0 0H100L130.5 53L161 0Z" fill="#41B883"/>
-          <path d="M161 0H209L130.5 136L52 0H100L130.5 53L161 0Z" fill="#34495E"/>
+          <path d="M161 0H261L130.5 226L0 0H100L130.5 53L161 0Z" fill="#41B883" />
+          <path d="M161 0H209L130.5 136L52 0H100L130.5 53L161 0Z" fill="#34495E" />
         </svg>
       </div>
 
@@ -102,18 +102,16 @@
 
         <p class="text-xs md:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-mono">
           {{ exam.description }}
-          <button type="button" class="text-site-primary dark:text-blue-400 font-bold hover:underline ml-1 cursor-pointer">
+          <button type="button"
+            class="text-site-primary dark:text-blue-400 font-bold hover:underline ml-1 cursor-pointer">
             See More
           </button>
         </p>
 
         <!-- Start Button line if active -->
         <div *ngIf="exam.isStartActive" class="pt-2 flex justify-end">
-          <button
-            type="button"
-            (click)="startExam(exam)"
-            class="bg-site-primary hover:bg-site-primary-hover text-white font-bold px-6 py-2 rounded-lg text-sm shadow-xs transition-all duration-200 flex items-center gap-2 cursor-pointer"
-          >
+          <button type="button" (click)="startExam(exam)"
+            class="bg-site-primary hover:bg-site-primary-hover text-white font-bold px-6 py-2 rounded-lg text-sm shadow-xs transition-all duration-200 flex items-center gap-2 cursor-pointer">
             <span>START</span>
             <lucide-icon name="arrow-right" [size]="16"></lucide-icon>
           </button>

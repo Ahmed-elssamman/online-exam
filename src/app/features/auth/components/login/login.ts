@@ -5,7 +5,7 @@ import { CustomFormField } from '@shared/components/ui/form-field/form-field';
 import { CustomFormFieldConfig } from '@shared/components/ui/form-field/form-field.model';
 import { SiteBtn } from '@shared/components/ui/site-btn/site-btn';
 import { LoginData } from './login.model';
-import { AuthLib } from '@ahmed_elssamman/auth-lib';
+// import { AuthLib } from '@ahmed_elssamman/auth-lib';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.html',
 })
 export class Login {
-  authLib = new AuthLib();
+  authLib = new this.authLib();
   private readonly router = inject(Router);
 
   loginModel = signal<LoginData>({ username: '', password: '' });
@@ -41,6 +41,9 @@ export class Login {
   onSubmit(event: SubmitEvent) {
     event.preventDefault();
     this.authLib.login(this.loginForm().value()).subscribe((response) => {
+      console.log("🚀 ~ Login ~ onSubmit ~ response:", response)
+      // localStorage.setItem('token', response.token);
+      localStorage.setItem('user', JSON.stringify(response.user));
       this.router.navigate(['/']);
     });
   }

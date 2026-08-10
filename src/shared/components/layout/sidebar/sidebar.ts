@@ -19,8 +19,8 @@ import { SidebarItems } from './sitebar.control';
   templateUrl: './sidebar.html',
 })
 export class SidebarComponent {
-  // Input list of sidebar items (with title, icon, path, isShow)
-  items = input<SidebarItem[]>(SidebarItems);
+
+  items = signal<SidebarItem[]>(SidebarItems);
 
   // Input user details
   user = input<UserAccount>({
@@ -33,7 +33,7 @@ export class SidebarComponent {
 
   isAccountMenuOpen = signal<boolean>(false);
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef) { }
 
   toggleAccountMenu(event: MouseEvent) {
     event.stopPropagation();

@@ -11,7 +11,7 @@ export class AuthAdapterService implements IAuthResponseAdapter {
             message: response?.message,
             status: response?.status,
             code: response?.code,
-            token: response?.payload?.user.token,
+            token: response?.payload?.token,
             user: {
                 email: response?.payload?.user?.email,
                 username: response?.payload?.user?.username,
