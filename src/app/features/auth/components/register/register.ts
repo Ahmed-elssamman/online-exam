@@ -24,8 +24,8 @@ import { RegisterData } from './register.model';
   templateUrl: './register.html',
 })
 export class Register {
-  authLib = new AuthLib();
-  private readonly router = inject(Router);
+  authLib = inject(AuthLib);
+  private router = inject(Router);
   
   activeStep = signal(1);
   otpValue = signal('');

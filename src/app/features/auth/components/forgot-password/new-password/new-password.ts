@@ -10,14 +10,14 @@ import { AuthLib } from '@ahmed_elssamman/auth-lib';
 
 @Component({
   selector: 'app-new-password',
+  standalone: true,
   imports: [CustomFormField, SiteBtn ,RouterLink],
   templateUrl: './new-password.html',
-  styles: ``,
 })
 export class NewPassword {
   private activatedRoute = inject(ActivatedRoute);
-  private readonly router = inject(Router);
-  authLib = new AuthLib();
+  private router = inject(Router);
+  authLib = inject(AuthLib);
 
   token = signal<string | null>(this.activatedRoute.snapshot.queryParamMap.get('token'));
   newPassData = signal(newPasswordConfig)

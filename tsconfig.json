@@ -22,7 +22,7 @@
       "@core/*": [
         "core/*"
       ],
-      "auth-lib": [
+      "@ahmed_elssamman/auth-lib": [
         "../projects/auth-lib/src/public-api.ts",
         "../dist/auth-lib"
       ]

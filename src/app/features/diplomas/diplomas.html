@@ -1,10 +1,8 @@
 <div class="max-w-7xl mx-auto space-y-6">
-  <!-- Top Breadcrumb / Page Title Label -->
   <div class="text-xs font-semibold text-slate-400 tracking-wide uppercase">
     Diplomas
   </div>
 
-  <!-- Blue Header Banner -->
   <div class="w-full bg-site-primary text-white p-5 md:p-6 rounded-2xl shadow-md flex items-center gap-3.5">
     <span class="text-3xl md:text-4xl">🎓</span>
     <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">
@@ -12,17 +10,12 @@
     </h2>
   </div>
 
-  <!-- Responsive Grid of Fixed-Height Cards -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
-    <ng-container *ngFor="let item of diplomas">
-      <app-diploma-card
-        [diploma]="item"
-        (cardClick)="onSelectDiploma($event)"
-      ></app-diploma-card>
-    </ng-container>
+    @for (item of diplomas(); track item.id) {
+    <app-diploma-card [diploma]="item" (cardClick)="onSelectDiploma($event)"></app-diploma-card>
+    }
   </div>
 
-  <!-- Bottom Scroll Indicator -->
   <div class="pt-10 pb-6 text-center text-slate-500 font-mono text-sm flex flex-col items-center gap-1.5">
     <span>Scroll to view more</span>
     <lucide-icon name="chevron-down" [size]="18" class="animate-bounce text-slate-400"></lucide-icon>

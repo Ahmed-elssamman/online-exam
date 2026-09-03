@@ -15,8 +15,16 @@ export const routes: Routes = [
         loadComponent: () => import('./features/diplomas/diplomas').then((m) => m.DiplomasComponent),
       },
       {
-        path: 'exams',
+        path: 'exams/:id',
         loadComponent: () => import('./features/exams/exams-list/exams-list').then((m) => m.ExamsListComponent),
+      },
+      {
+        path: 'exam/details/:examid',
+        loadComponent: () => import('./features/exams/exam-details/online-exam').then((m) => m.OnlineExam),
+      },
+      {
+        path: 'exam/review/:submissionId',
+        loadComponent: () => import('./features/exams/exam-review/exam-review').then((m) => m.ExamReview),
       },
       {
         path: '',

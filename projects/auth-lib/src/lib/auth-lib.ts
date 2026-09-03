@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { API_CONFIG } from './config/auth-config';
 import { AuthConfig } from './models/auth-config.model';
 import { HttpClient } from '@angular/common/http';
@@ -9,48 +9,45 @@ import { AuthAdapterService } from './adapter/auth-adapter.service';
 import { map } from 'rxjs';
 import { IAuthResponseInterface } from './models/auth-response.interface';
 
-@Component({
-  selector: 'lib-auth-lib',
-  imports: [],
-  template: ` <p>auth-lib works!</p> `,
-  styles: ``,
+@Injectable({
+  providedIn: 'root',
 })
 export class AuthLib {
-  private readonly api_config = inject<AuthConfig>(API_CONFIG);
-  private readonly http = inject(HttpClient);
-  private readonly AuthAdapterService = inject(AuthAdapterService);
+  private apiConfig = inject<AuthConfig>(API_CONFIG);
+  private http = inject(HttpClient);
+  private authAdapterService = inject(AuthAdapterService);
 
   sendEmailForVerification(email: string, customEndpoint?: string) {
     const endpoint = customEndpoint ? customEndpoint : AUTH_ENDPOINTS.SEND_EMAIL_VERIFICATION;
-    return this.http.post(`${this.api_config.baseUrl}${endpoint}`, { email });
+    return this.http.post(`${this.apiConfig.baseUrl}${endpoint}`, { email });
   }
 
   verifyEmail(userData: { email: string; code: string }, customEndpoint?: string) {
     const endpoint = customEndpoint ? customEndpoint : AUTH_ENDPOINTS.VERIFY_EMAIL;
-    return this.http.post(`${this.api_config.baseUrl}${endpoint}`, userData);
+    return this.http.post(`${this.apiConfig.baseUrl}${endpoint}`, userData);
   }
 
   register(userData: Partial<IAuthRegisterInterface>, customEndpoint?: string) {
     const endpoint = customEndpoint ? customEndpoint : AUTH_ENDPOINTS.REGISTER;
-    return this.http.post<IAuthResponseInterface>(`${this.api_config.baseUrl}${endpoint}`, userData).pipe(
-      map((response: IAuthResponseInterface) => this.AuthAdapterService.adapt(response)));
+    return this.http.post<IAuthResponseInterface>(`${this.apiConfig.baseUrl}${endpoint}`, userData).pipe(
+      map((response: IAuthResponseInterface) => this.authAdapterService.adapt(response)));
   }
 
   login(userData: IAuthLoginRequest, customEndpoint?: string) {
     const endpoint = customEndpoint ? customEndpoint : AUTH_ENDPOINTS.LOGIN;
-    return this.http.post<IAuthResponseInterface>(`${this.api_config.baseUrl}${endpoint}`, userData).pipe(
-      map((response: IAuthResponseInterface) => this.AuthAdapterService.adapt(response))
+    return this.http.post<IAuthResponseInterface>(`${this.apiConfig.baseUrl}${endpoint}`, userData).pipe(
+      map((response: IAuthResponseInterface) => this.authAdapterService.adapt(response))
     );
   }
 
   forgotPassword(userData: { email: string, redirectUrl?: string }, customEndpoint?: string) {
     const endpoint = customEndpoint ? customEndpoint : AUTH_ENDPOINTS.FORGOT_PASSWORD;
-    return this.http.post(`${this.api_config.baseUrl}${endpoint}`, userData);
+    return this.http.post(`${this.apiConfig.baseUrl}${endpoint}`, userData);
   }
 
   resetPassword(userData: {token: string, newPassword: string, confirmPassword: string}, customEndpoint?: string) {
     const endpoint = customEndpoint ? customEndpoint : AUTH_ENDPOINTS.RESET_PASSWORD;
-    return this.http.post(`${this.api_config.baseUrl}${endpoint}`, userData);
+    return this.http.post(`${this.apiConfig.baseUrl}${endpoint}`, userData);
   }
 
   logout():string{

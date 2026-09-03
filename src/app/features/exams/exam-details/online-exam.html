@@ -1,0 +1,162 @@
+<div class="max-w-5xl mx-auto space-y-6 pb-12">
+  <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs md:text-sm font-semibold text-slate-400">
+    <a routerLink="/diplomas" class="hover:text-site-primary transition">Diplomas</a>
+    @if (diplomaTitle()) {
+    <span>/</span>
+    <span class="hover:text-site-primary cursor-pointer">{{ diplomaTitle() }}</span>
+    }
+    @if (examTitle()) {
+    <span>/</span>
+    <span class="text-site-primary">{{ examTitle() }}</span>
+    }
+  </nav>
+
+  <header class="flex items-center gap-3 md:gap-4">
+    <button type="button" (click)="goBack()"
+      class="w-12 h-12 md:w-14 md:h-14 bg-white border border-blue-300 rounded-2xl flex items-center justify-center text-site-primary hover:bg-blue-50 transition shadow-xs cursor-pointer flex-shrink-0"
+      aria-label="Go back">
+      <lucide-icon name="chevron-left" [size]="24" class="text-site-primary"></lucide-icon>
+    </button>
+
+    <div
+      class="flex-1 bg-site-primary text-white px-5 py-4 md:px-7 md:py-5 rounded-2xl shadow-md flex items-center gap-3.5">
+      <div
+        class="w-9 h-9 md:w-10 md:h-10 rounded-full border-2 border-white/80 flex items-center justify-center flex-shrink-0">
+        <lucide-icon name="circle-question-mark" [size]="22" class="text-white"></lucide-icon>
+      </div>
+      <h1 class="text-lg md:text-2xl font-bold tracking-tight text-white">
+        {{ examTitle() ? examTitle() + ' Questions' : 'Exam Questions' }}
+      </h1>
+    </div>
+  </header>
+
+  <main class="bg-white rounded-3xl p-6 sm:p-8 md:p-10 shadow-sm border border-slate-100 space-y-6 w-full">
+    <section class="space-y-3 pb-2">
+
+
+      <div class="flex items-center gap-4 ">
+
+        <div class="w-full border-r-2 border-blue-400 p-2  pe-2">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="space-y-1">
+              <h2 class="text-sm md:text-base font-semibold text-slate-800">
+                {{ diplomaTitle() ? diplomaTitle() + ' - ' : '' }}{{ examTitle() || 'Online' }} Quiz
+              </h2>
+              <span class="inline-block text-xs text-slate-500 font-medium">
+                Answered: <strong class="text-site-primary">{{ answeredCount() }}</strong> / {{ totalQuestionsCount() }}
+              </span>
+            </div>
+
+            <div class="flex items-center justify-between sm:justify-end gap-5">
+              <span class="text-xs md:text-sm font-medium text-slate-500">
+                Question <strong class="text-site-primary font-bold text-sm md:text-base">{{ currentIndex() + 1
+                  }}</strong> of {{ totalQuestionsCount() }}
+              </span>
+
+
+            </div>
+          </div>
+          <p-progressBar [value]="progressValue()" [showValue]="false" class="h-4 rounded-full bg-slate-100"
+            color="#1D61E7" />
+
+        </div>
+
+        @if (totalExamSeconds() > 0) {
+        <aside aria-label="Remaining Time" class="flex items-center justify-center flex-shrink-0">
+          <p-knob [ngModel]="remainingSeconds()" [max]="totalExamSeconds() || 100" [strokeWidth]="15" [size]="80"
+            [readonly]="true" [valueTemplate]="formattedTime()" valueColor="#1D61E7" rangeColor="#E2E8F0" />
+        </aside>
+        }
+      </div>
+    </section>
+
+    <div class="w-full">
+      <p-carousel [value]="questions()" [numVisible]="1" [numScroll]="1" orientation="vertical"
+        verticalViewPortHeight="500px" [page]="currentIndex()" (onPage)="onCarouselPageChange($event)"
+        [showNavigators]="false" [showIndicators]="false" styleClass="w-full" contentClass="w-full">
+        <ng-template let-question let-i="index" #item>
+          <div class="w-full min-h-[440px] flex flex-col justify-between p-1 sm:p-2 space-y-6">
+            <div class="w-full pt-1">
+              <h3 class="text-lg sm:text-xl font-mono font-bold text-site-primary leading-relaxed break-words">
+                {{ getQuestionText(question) }}
+              </h3>
+            </div>
+
+            <div class="space-y-9 w-full flex-1">
+              @for (opt of question.answers; track (opt.id || opt._id || opt.key || $index)) {
+              <div (click)="selectOption(question.id || question._id, opt)"
+                class="flex items-center gap-3.5 p-3.5 sm:p-4 rounded-sm transition-all duration-150 cursor-pointer w-full text-left bg-[#F8F9FB] hover:bg-[#EFF2F6]">
+                <span [class.border-site-primary]="isOptionSelected(question.id || question._id, opt)"
+                  [class.border-slate-400]="!isOptionSelected(question.id || question._id, opt)"
+                  class="w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0">
+                  @if (isOptionSelected(question.id || question._id, opt)) {
+                  <span class="w-2 h-2 rounded-full bg-site-primary"></span>
+                  }
+                </span>
+                <span class="text-xs sm:text-sm font-mono text-slate-800 break-words flex-1 leading-relaxed">
+                  {{ getAnswerText(opt) }}
+                </span>
+              </div>
+              }
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+
+    <footer class="grid grid-cols-2 gap-4 w-full pt-4">
+      <button type="button" (click)="goToPrevious()" [disabled]="isFirstQuestion()"
+        class="w-full py-3.5 px-4 rounded-sm bg-[#EBEBEB] hover:bg-[#E0E0E0] text-slate-500 font-mono text-sm sm:text-base font-semibold flex items-center justify-center gap-2 transition disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">
+        <lucide-icon name="chevron-left" [size]="18"></lucide-icon>
+        <span>Previous</span>
+      </button>
+
+      @if (!isLastQuestion()) {
+      <button type="button" (click)="goToNext()"
+        class="w-full py-3.5 px-4 rounded-sm bg-site-primary hover:bg-blue-700 text-white font-mono text-sm sm:text-base font-semibold flex items-center justify-center gap-2 transition shadow-xs cursor-pointer">
+        <span>Next</span>
+        <lucide-icon name="chevron-right" [size]="18"></lucide-icon>
+      </button>
+      } @else {
+      <button type="button" (click)="openConfirmSubmit()"
+        class="w-full py-3.5 px-4 rounded-sm bg-site-primary hover:bg-blue-700 text-white font-mono text-sm sm:text-base font-semibold flex items-center justify-center gap-2 transition shadow-xs cursor-pointer">
+        <span>Submit</span>
+        <lucide-icon name="chevron-right" [size]="18"></lucide-icon>
+      </button>
+      }
+    </footer>
+  </main>
+
+  <p-dialog [visible]="showConfirmSubmitDialog()" (visibleChange)="showConfirmSubmitDialog.set($event)" [modal]="true"
+    [draggable]="false" [resizable]="false" styleClass="w-[90vw] max-w-md rounded-3xl overflow-hidden bg-white"
+    header="Submit Exam">
+    <div class="space-y-4 pt-2">
+      <div class="p-4 rounded-2xl bg-blue-50 flex items-start gap-3">
+        <lucide-icon name="circle-question-mark" [size]="22"
+          class="text-site-primary flex-shrink-0 mt-0.5"></lucide-icon>
+        <div class="text-sm text-slate-700">
+          <p class="font-semibold text-slate-900">Are you ready to submit?</p>
+          <p class="text-xs text-slate-600 mt-1">
+            You have answered <strong class="text-site-primary">{{ answeredCount() }}</strong> of <strong>{{
+              totalQuestionsCount() }}</strong> questions.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-2">
+        <button type="button" (click)="closeConfirmSubmit()"
+          class="px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition cursor-pointer">
+          Continue Exam
+        </button>
+        <button type="button" (click)="submitExam()" [disabled]="isSubmitting()"
+          class="px-5 py-2.5 rounded-xl text-sm font-semibold bg-site-primary hover:bg-blue-700 text-white transition flex items-center gap-2 shadow-sm cursor-pointer">
+          @if (isSubmitting()) {
+          <span>Submitting...</span>
+          } @else {
+          <span>Yes, Submit</span>
+          }
+        </button>
+      </div>
+    </div>
+  </p-dialog>
+</div>

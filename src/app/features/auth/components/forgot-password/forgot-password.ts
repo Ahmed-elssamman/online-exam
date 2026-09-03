@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { email, form, required } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 import { forgotPasswordConfig } from '@core/constants/forgot-password';
@@ -16,7 +16,7 @@ import { environment } from 'environments/environment.development';
 })
 export class ForgotPassword {
   forgotData = signal(forgotPasswordConfig)
-  authLib = new AuthLib();
+  authLib = inject(AuthLib);
 
   email = signal<string | null>(null);
   redirectUrl = signal<string>(`${environment.redirectUrl}/auth/new-password`);

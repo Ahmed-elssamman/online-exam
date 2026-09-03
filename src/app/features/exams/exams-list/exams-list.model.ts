@@ -1,9 +1,10 @@
-export interface ExamItem {
+export interface ExamListModel {
   id: string;
   title: string;
   description: string;
+  image: string;
+  duration: number;
+  createdAt: Date;
   questionsCount: number;
-  durationMinutes: number;
-  iconType: 'html' | 'css' | 'js' | 'react' | 'angular' | 'vue';
-  isStartActive?: boolean;
 }
+

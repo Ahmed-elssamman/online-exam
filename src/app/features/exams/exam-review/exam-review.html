@@ -1,0 +1,137 @@
+<div class="max-w-5xl mx-auto space-y-6 pb-12">
+  <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-xs md:text-sm font-semibold text-slate-400">
+    <a routerLink="/diplomas" class="hover:text-site-primary transition">Diplomas</a>
+    <span>/</span>
+    <span class="hover:text-site-primary cursor-pointer">{{ diplomaTitle() }}</span>
+    <span>/</span>
+    <span class="text-site-primary">{{ examTitle() }}</span>
+  </nav>
+
+  <header class="flex items-center gap-3 md:gap-4">
+    <button type="button" (click)="goBack()"
+      class="w-12 h-12 md:w-14 md:h-14 bg-white border border-blue-300 rounded-2xl flex items-center justify-center text-site-primary hover:bg-blue-50 transition shadow-xs cursor-pointer flex-shrink-0"
+      aria-label="Go back">
+      <lucide-icon name="chevron-left" [size]="24" class="text-site-primary"></lucide-icon>
+    </button>
+
+    <div
+      class="flex-1 bg-site-primary text-white px-5 py-4 md:px-7 md:py-5 rounded-2xl shadow-md flex items-center gap-3.5">
+      <div
+        class="w-9 h-9 md:w-10 md:h-10 rounded-full border-2 border-white/80 flex items-center justify-center flex-shrink-0">
+        <lucide-icon name="circle-question-mark" [size]="22" class="text-white"></lucide-icon>
+      </div>
+      <h1 class="text-lg md:text-2xl font-bold tracking-tight text-white font-mono">
+        {{ examTitle() }} Questions
+      </h1>
+    </div>
+  </header>
+
+  <main class="bg-white rounded-3xl p-6 sm:p-8 md:p-10 shadow-sm border border-slate-100 space-y-6">
+    <section class="space-y-3">
+      <div class="flex items-center justify-between text-xs sm:text-sm font-mono font-medium text-slate-600">
+        <span>{{ diplomaTitle() }} - {{ examTitle() }} Quiz</span>
+        <span>Question <strong class="text-site-primary font-bold">{{ totalQuestions() }}</strong> of {{
+          totalQuestions() }}</span>
+      </div>
+
+      <div class="w-full h-2.5 bg-site-primary rounded-sm"></div>
+    </section>
+
+    <h2 class="text-xl md:text-2xl font-bold text-site-primary font-mono tracking-tight pt-2">
+      Results:
+    </h2>
+
+    <div
+      class="border border-blue-200/90 rounded-2xl p-4 sm:p-6 bg-white flex flex-col md:flex-row gap-6 items-stretch">
+      <div
+        class="w-full md:w-5/12 bg-blue-50/40 rounded-2xl p-6 sm:p-8 flex flex-col items-center justify-center gap-6">
+        <div class="relative w-44 h-44 sm:w-48 sm:h-48 flex items-center justify-center">
+          <svg class="w-full h-full transform -rotate-90" viewBox="0 0 160 160">
+            <circle cx="80" cy="80" r="65" stroke-width="18" stroke="#E2E8F0" fill="none" />
+
+            @if (correctRatio() > 0) {
+            <circle cx="80" cy="80" r="65" stroke-width="18" stroke="#00C48C" fill="none" stroke-dasharray="408.4"
+              [style.strokeDashoffset]="correctStrokeDashoffset()" stroke-linecap="butt"
+              class="transition-all duration-1000 ease-out" />
+            }
+
+            @if (wrongRatio() > 0) {
+            <circle cx="80" cy="80" r="65" stroke-width="18" stroke="#FF4D4F" fill="none" stroke-dasharray="408.4"
+              [style.strokeDashoffset]="wrongStrokeDashoffset()"
+              [style.transform]="'rotate(' + wrongStrokeRotation() + 'deg)'" [style.transform-origin]="'80px 80px'"
+              stroke-linecap="butt" class="transition-all duration-1000 ease-out" />
+            }
+          </svg>
+        </div>
+
+        <div class="flex flex-col gap-2.5 font-mono text-xs sm:text-sm font-semibold text-slate-800">
+          <div class="flex items-center gap-2.5">
+            <span class="w-4 h-4 rounded-xs inline-block flex-shrink-0" style="background-color: #00C48C;"></span>
+            <span>Correct: {{ correctCount() }}</span>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <span class="w-4 h-4 rounded-xs inline-block flex-shrink-0" style="background-color: #FF4D4F;"></span>
+            <span>Incorrect: {{ wrongCount() }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full md:w-7/12 max-h-[420px] overflow-y-auto space-y-6 pr-2 sm:pr-3">
+        @for (item of analytics(); track item.questionId || $index) {
+        <div class="space-y-2.5">
+          <h3 class="text-site-primary font-bold text-sm sm:text-base font-mono leading-snug">
+            {{ item.questionText }}
+          </h3>
+
+          @if (!item.isCorrect) {
+          @if (item.selectedAnswer) {
+          <div
+            class="rounded-xl p-3 sm:p-3.5 flex items-center gap-3 text-slate-800 text-xs sm:text-sm font-mono font-medium border"
+            style="background-color: #FFF1F0; border-color: #FFCCC7;">
+            <span class="w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0"
+              style="border-color: #FF4D4F;">
+              <span class="w-2 h-2 rounded-full" style="background-color: #FF4D4F;"></span>
+            </span>
+            <span class="break-words flex-1 text-slate-800">{{ getAnswerText(item.selectedAnswer) }}</span>
+          </div>
+          }
+
+          <div
+            class="rounded-xl p-3 sm:p-3.5 flex items-center gap-3 text-slate-800 text-xs sm:text-sm font-mono font-medium border"
+            style="background-color: #E6FFFA; border-color: #B2F5EA;">
+            <span class="w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0"
+              style="border-color: #00C48C;"></span>
+            <span class="break-words flex-1 text-slate-800">{{ getAnswerText(item.correctAnswer) }}</span>
+          </div>
+          } @else {
+          <div
+            class="rounded-xl p-3 sm:p-3.5 flex items-center gap-3 text-slate-800 text-xs sm:text-sm font-mono font-medium border"
+            style="background-color: #E6FFFA; border-color: #B2F5EA;">
+            <span class="w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0"
+              style="border-color: #00C48C;">
+              <span class="w-2 h-2 rounded-full" style="background-color: #00C48C;"></span>
+            </span>
+            <span class="break-words flex-1 text-slate-800">{{ getAnswerText(item.correctAnswer || item.selectedAnswer)
+              }}</span>
+          </div>
+          }
+        </div>
+        }
+      </div>
+    </div>
+
+    <footer class="flex flex-col sm:flex-row items-center gap-4 pt-2">
+      <button type="button" (click)="restartExam()"
+        class="w-full sm:flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition cursor-pointer font-mono text-sm md:text-base">
+        <lucide-icon name="rotate-ccw" [size]="18"></lucide-icon>
+        <span>Restart</span>
+      </button>
+
+      <button type="button" (click)="goExplore()"
+        class="w-full sm:flex-1 bg-site-primary hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl flex items-center justify-center gap-2 transition cursor-pointer shadow-sm font-mono text-sm md:text-base">
+        <lucide-icon name="folder" [size]="18"></lucide-icon>
+        <span>Explore</span>
+      </button>
+    </footer>
+  </main>
+</div>

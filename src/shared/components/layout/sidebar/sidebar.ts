@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { SidebarItem, UserAccount } from './sidebar.model';
 import { GraduationCap, User, MoreVertical, LayoutDashboard, LogOut, CodeXml, LUCIDE_ICONS, LucideAngularModule, LucideIconProvider } from 'lucide-angular';
-import { SidebarItems } from './sitebar.control';
+import { SidebarItems } from './sidebar.control';
 
 @Component({
   selector: 'app-sidebar',
