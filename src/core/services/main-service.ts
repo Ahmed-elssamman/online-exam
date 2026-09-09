@@ -63,8 +63,8 @@ export class MainService {
     return this.httpClient.post<Result<T>>(this.buildUrl(), data);
   }
 
-  update<T>(id: string, data: T): Observable<Result<T>> {
-    return this.httpClient.put<Result<T>>(this.buildUrl(id), data);
+  update<T>(data: T): Observable<Result<T>> {
+    return this.httpClient.patch<Result<T>>(this.buildUrl(), data);
   }
 
   delete<T>(id: string): Observable<Result<T>> {

@@ -1,7 +1,7 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '../sidebar/sidebar';
-import { SidebarItem } from '../sidebar/sidebar.model';
+import { AuthLib } from '@ahmed_elssamman/auth-lib';
 
 @Component({
   selector: 'app-main-layout',
@@ -10,9 +10,15 @@ import { SidebarItem } from '../sidebar/sidebar.model';
   templateUrl: './main-layout.html',
 })
 export class MainLayoutComponent {
+  private router = inject(Router);
+  private authLib = inject(AuthLib);
 
   handleAccountAction(action: string) {
-    console.log('Sidebar account action clicked:', action);
+    if (action === 'account') {
+      this.router.navigate(['/account']);
+    } else if (action === 'logout') {
+      this.authLib.logout();
+      this.router.navigate(['/auth/login']);
+    }
   }
-
 }

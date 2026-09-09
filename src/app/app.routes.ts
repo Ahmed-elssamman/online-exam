@@ -27,6 +27,14 @@ export const routes: Routes = [
         loadComponent: () => import('./features/exams/exam-review/exam-review').then((m) => m.ExamReview),
       },
       {
+        path: 'account',
+        loadComponent: () => import('./features/account/profile/profile').then((m) => m.Profile),
+      },
+      {
+        path: 'account/change-password',
+        loadComponent: () => import('./features/account/change-password/change-password').then((m) => m.ChangePassword),
+      },
+      {
         path: '',
         redirectTo: 'diplomas',
         pathMatch: 'full',
